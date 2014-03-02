@@ -13,5 +13,3 @@
      "python -c 'import sys,json; data=json.loads(sys.stdin.read()); print json.dumps(data,sort_keys=True,indent=4).decode(\"unicode_escape\").encode(\"utf8\",\"replace\")'" (current-buffer) t)))
 
 (define-key json-mode-map (kbd "C-c C-f") 'beautify-json)
-
-(provide 'init-json)

@@ -3,5 +3,3 @@
                     textile-mode
                     boxquote
 		    csv-mode))
-
-(provide 'init-text)

@@ -186,5 +186,3 @@
                            ".byte"))
              (setq indent-line-function 'ocp-indent-line)
              (setq merlin-use-auto-complete-mode t)))
-
-(provide 'init-ocaml)
