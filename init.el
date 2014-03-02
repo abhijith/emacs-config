@@ -29,9 +29,13 @@
   (recentf-mode 0)
 
   (mapc (lambda (name)
-        (require (intern (file-name-sans-extension name))))
-	(directory-files "~/.emacs.d/init-enabled" nil "\\.el$"))
+	  (load-file (concat "~/.emacs.d/init.d/" name)))
+	(directory-files "~/.emacs.d/init.d" nil "\\.el$"))
 
   (setq custom-file "~/.emacs.d/emacs-custom.el")
   (when (file-exists-p custom-file)
-    (load custom-file)))
+    (load custom-file))
+
+  (setq user-specific-config (concat "~/.emacs.d/" user-login-name ".el"))
+  (if (file-exists-p user-specific-config)
+      (load user-specific-config)))

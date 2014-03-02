@@ -38,5 +38,3 @@
           (dired-do-kill-lines))
       (progn (revert-buffer) ; otherwise just revert to re-show
              (set (make-local-variable 'dired-dotfiles-show-p) t)))))
-
-(provide 'init-dired)

@@ -13,5 +13,3 @@
 
 ;; Default to unified diffs
 (setq diff-switches "-u")
-
-(provide 'init-git)
