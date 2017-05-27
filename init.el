@@ -42,4 +42,5 @@
   (when (file-exists-p custom-file)
     (load custom-file))
   (load-theme 'dusk)
+  (put 'upcase-region 'disabled nil)
   (set-face-attribute 'default nil :height 85))

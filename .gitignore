@@ -6,3 +6,5 @@ elpa
 backups
 .saves
 auto-save-list
+recentf*
+session*
