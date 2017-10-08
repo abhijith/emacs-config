@@ -43,4 +43,4 @@
     (load custom-file))
   (load-theme 'dusk)
   (put 'upcase-region 'disabled nil)
-  (set-face-attribute 'default nil :height 85))
+  (set-face-attribute 'default nil :height 95))

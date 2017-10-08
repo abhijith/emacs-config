@@ -4,7 +4,7 @@
 ;; $ go get github.com/rogpeppe/godef
 ;; go imports ->  go get golang.org/x/tools/cmd/goimports
 
-(install-packages '(go go-autocomplete))
+(install-packages '(go-mode go-complete))
 
 (require 'go-mode)
 

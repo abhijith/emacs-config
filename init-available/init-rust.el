@@ -1,7 +1,7 @@
 (require 'packages)
 (require 'company)
 
-(install-packages '(rust-mode racer flycheck-rust))
+(install-packages '(rust-mode racer flycheck-rust cargo))
 
 (require 'rust-mode)
 ;; Reference http://julienblanchard.com/2016/fancy-rust-development-with-emacs/
