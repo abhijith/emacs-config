@@ -21,7 +21,9 @@
   ;; (load-file "$GOPATH/src/golang.org/x/tools/cmd/guru/oracle.el")
   ; Godef jump key binding
   (local-set-key (kbd "M-.") 'godef-jump)
-  (local-set-key (kbd "M-*") 'pop-tag-mark))
+  (local-set-key (kbd "M-*") 'pop-tag-mark)
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (setq tab-width 4 indent-tabs-mode 1))
 
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
@@ -31,6 +33,7 @@
 (add-hook 'go-mode-hook 'auto-complete-for-go)
 
 (with-eval-after-load 'go-mode
-  (require 'go-autocomplete))
+  (require 'go-autocomplete)
+  (ac-config-default))
 
 (provide 'init-go)
