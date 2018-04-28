@@ -8,3 +8,4 @@ backups
 auto-save-list
 recentf*
 session*
+el-get/*
