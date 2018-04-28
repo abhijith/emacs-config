@@ -72,7 +72,7 @@
 
 ;; (add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
 ;; (add-hook 'cider-mode-hook 'set-auto-complete-as-completion-at-point-function)
-(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+(add-hook 'cider-mode-hook 'eldoc-mode)
 (setq cider-repl-use-clojure-font-lock t)
 ;; ;; clojure stuff
 (require 'company)
