@@ -1,0 +1,1 @@
+../init-available/init-go.el
