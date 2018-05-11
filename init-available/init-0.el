@@ -1,6 +1,6 @@
 (require 'packages)
-(install-packages '(escreen company powerline
-                    jump))
+
+(install-packages '(company powerline jump))
 
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
@@ -18,20 +18,6 @@
 
 (require 'jump)
 (autoload 'defjump "jump-def" "Jump to a definition." t)
-
-;; escreen
-(load "escreen")
-(escreen-install)
-(global-set-key (kbd "M-1") 'escreen-goto-screen-0)
-(global-set-key (kbd "M-2") 'escreen-goto-screen-1)
-(global-set-key (kbd "M-3") 'escreen-goto-screen-2)
-(global-set-key (kbd "M-4") 'escreen-goto-screen-3)
-(global-set-key (kbd "M-5") 'escreen-goto-screen-4)
-(global-set-key [S-right] 'escreen-goto-next-screen)
-(global-set-key [S-left]  'escreen-goto-prev-screen)
-
-(global-set-key [C-right] 'escreen-goto-next-screen)
-(global-set-key [C-left]  'escreen-goto-prev-screen)
 
 (setq resize-mini-windows nil)
 

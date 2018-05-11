@@ -44,3 +44,40 @@
   (load-theme 'dusk)
   (put 'upcase-region 'disabled nil)
   (set-face-attribute 'default nil :height 95))
+
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
+;; Simple package names
+(el-get-bundle escreen
+;; escreen
+(load "escreen")
+(escreen-install)
+(global-set-key (kbd "M-1") 'escreen-goto-screen-0)
+(global-set-key (kbd "M-2") 'escreen-goto-screen-1)
+(global-set-key (kbd "M-3") 'escreen-goto-screen-2)
+(global-set-key (kbd "M-4") 'escreen-goto-screen-3)
+(global-set-key (kbd "M-5") 'escreen-goto-screen-4)
+(global-set-key [S-right] 'escreen-goto-next-screen)
+(global-set-key [S-left]  'escreen-goto-prev-screen)
+
+(global-set-key [C-right] 'escreen-goto-next-screen)
+(global-set-key [C-left]  'escreen-goto-prev-screen))
+
+;; ;; Locally defined recipe
+;; (el-get-bundle escreen
+;;   :url "http://www.splode.com/~friedman/software/emacs-lisp/src/escreen.el")
+  
+
+;; ;; With initialization code
+;; (el-get-bundle zenburn-theme
+;;   :url "https://raw.githubusercontent.com/bbatsov/zenburn-emacs/master/zenburn-theme.el"
+;;   (load-theme 'zenburn t))
+
+(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
