@@ -79,4 +79,10 @@
 (add-hook 'cider-repl-mode-hook 'company-mode)
 (add-hook 'cider-mode-hook 'company-mode)
 
+(defun xtra-cider-repl-bindings ()
+  (local-set-key (kbd "C-c C-l") 'cider-repl-clear-buffer))
+
+(add-hook 'cider-repl-mode-hook 'eldoc-mode)
+
+
 (provide 'init-clj)
