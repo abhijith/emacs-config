@@ -42,6 +42,7 @@
   (when (file-exists-p custom-file)
     (load custom-file))
   (load-theme 'dusk)
+  ;; (load-theme 'bubbleberry)
   (put 'upcase-region 'disabled nil)
   (set-face-attribute 'default nil :height 95))
 
@@ -73,7 +74,7 @@
 ;; ;; Locally defined recipe
 ;; (el-get-bundle escreen
 ;;   :url "http://www.splode.com/~friedman/software/emacs-lisp/src/escreen.el")
-  
+
 
 ;; ;; With initialization code
 ;; (el-get-bundle zenburn-theme

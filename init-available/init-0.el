@@ -1,6 +1,6 @@
 (require 'packages)
 
-(install-packages '(company powerline jump))
+(install-packages '(company powerline jump bubbleberry-theme zenburn-theme))
 
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))

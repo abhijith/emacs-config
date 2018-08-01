@@ -9,13 +9,16 @@
   `(defface ,name '((((class color)) (:foreground ,color ,@others))) ,desc :group 'faces))
 
 (defclojureface clojure-parens       "DimGrey"   "Clojure parens")
-(defclojureface clojure-braces       "#49b2c7"   "Clojure braces")
-(defclojureface clojure-brackets     "SteelBlue" "Clojure brackets")
-(defclojureface clojure-keyword      "#388E8E"     "Clojure keywords")
-(defclojureface clojure-namespace    "#c476f1"   "Clojure namespace")
-(defclojureface clojure-java-call    "#4bcf68"   "Clojure Java calls")
-(defclojureface clojure-special      "#b8bb00"   "Clojure special")
-(defclojureface clojure-double-quote "#b8bb00"   "Clojure special" (:background "unspecified"))
+(defclojureface clojure-braces       "DimGrey"   "Clojure braces")
+(defclojureface clojure-brackets     "DimGrey" "Clojure brackets")
+;;(defclojureface clojure-keyword      "OrangeRed4" "Clojure keywords")
+;;(defclojureface clojure-keyword      "tomato4" "Clojure keywords")
+(defclojureface clojure-keyword      "IndianRed4" "Clojure keywords")
+
+;; (defclojureface clojure-namespace    "#c476f1"   "Clojure namespace")
+;; (defclojureface clojure-java-call    "#4bcf68"   "Clojure Java calls")
+;; (defclojureface clojure-special      "#b8bb00"   "Clojure special")
+;; (defclojureface clojure-double-quote "#b8bb00"   "Clojure special" (:background "unspecified"))
 
 (defun tweak-clojure-syntax ()
   (mapcar (lambda (x) (font-lock-add-keywords nil x))
@@ -83,6 +86,7 @@
   (local-set-key (kbd "C-c C-l") 'cider-repl-clear-buffer))
 
 (add-hook 'cider-repl-mode-hook 'eldoc-mode)
+(add-hook 'cider-repl-mode-hook 'xtra-cider-repl-bindings)
 
 
 (provide 'init-clj)
