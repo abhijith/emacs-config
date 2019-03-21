@@ -1,3 +1,10 @@
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (progn
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/init-enabled") t)
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/themes") t)
@@ -42,7 +49,6 @@
   (when (file-exists-p custom-file)
     (load custom-file))
   (load-theme 'dusk)
-  ;; (load-theme 'bubbleberry)
   (put 'upcase-region 'disabled nil)
   (set-face-attribute 'default nil :height 95))
 
@@ -82,3 +88,5 @@
 ;;   (load-theme 'zenburn t))
 
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+
+;; (dracula-theme yaml-mode csv-mode boxquote textile-mode toml-mode cargo flycheck-rust racer rust-mode json-mode haskell-mode go-eldoc go-errcheck go-autocomplete go-complete go-mode dired-details highline paredit ac-cider cider clojure-mode zenburn-theme bubbleberry-theme jump powerline company)
