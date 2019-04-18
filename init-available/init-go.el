@@ -1,11 +1,14 @@
 (require 'packages)
 
-;; go-autocomplete dependency -> $ go get -u github.com/mdempsky/gocode
+;; go-autocomplete dependency
+;; go get -u github.com/mdempsky/gocode
 
-;; $ go get github.com/rogpeppe/godef
-;; go imports ->  go get golang.org/x/tools/cmd/goimports
+;; go get github.com/rogpeppe/godef
 
-(install-packages '(go-mode go-complete go-autocomplete go-errcheck go-eldoc))
+;; go imports
+;; go get golang.org/x/tools/cmd/goimports
+
+(install-packages '(go-mode go-complete go-autocomplete go-errcheck go-eldoc go-imports go-gopath))
 
 (require 'go-mode)
 
@@ -18,8 +21,6 @@
   (if (not (string-match "go" compile-command))
       (set (make-local-variable 'compile-command)
            "go generate && go build -v && go test -v && go vet"))
-  ; Go Guru
-  ;; (load-file "$GOPATH/src/golang.org/x/tools/cmd/guru/oracle.el")
   ; Godef jump key binding
   (local-set-key (kbd "M-.") 'godef-jump)
   (local-set-key (kbd "M-*") 'pop-tag-mark)

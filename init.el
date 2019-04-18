@@ -35,7 +35,6 @@
   (mouse-wheel-mode t)
   (blink-cursor-mode t)
   (recentf-mode 0)
-
   (setq backup-directory-alist `(("." . "~/.emacs.d/.saves")))
   (setq delete-old-versions t
 	kept-new-versions 6

@@ -1,6 +1,6 @@
 (require 'packages)
 
-(install-packages '(company powerline jump bubbleberry-theme zenburn-theme))
+(install-packages '(company powerline jump exec-path-from-shell))
 
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
@@ -34,7 +34,9 @@
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-; (define-key global-map (kbd "RET") 'newline-and-indent)
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+(exec-path-from-shell-initialize)
 
 
 (require 'powerline)
