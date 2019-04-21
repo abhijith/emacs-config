@@ -5,6 +5,9 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
 (progn
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/init-enabled") t)
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/themes") t)
@@ -48,8 +51,22 @@
   (when (file-exists-p custom-file)
     (load custom-file))
   (load-theme 'dusk)
-  (put 'upcase-region 'disabled nil)
-  (set-face-attribute 'default nil :height 95))
+  (set-face-attribute 'default nil :height 96)
+  (put 'upcase-region 'disabled nil))
+
+;; (defun fontify-frame (frame)
+;;   (interactive)
+;;   (if window-system
+;;       (progn
+;;         (if (> (x-display-pixel-width) 2000)
+;;           (set-frame-parameter frame 'font "Inconsolata 10") ;; Cinema Display
+;;           (set-frame-parameter frame 'font "Inconsolata 10")))))
+
+;; ;; Fontify current frame
+;; (fontify-frame nil)
+
+;; Fontify any future frames
+(push 'fontify-frame after-make-frame-functions)
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
@@ -62,19 +79,18 @@
 
 ;; Simple package names
 (el-get-bundle escreen
-;; escreen
-(load "escreen")
-(escreen-install)
-(global-set-key (kbd "M-1") 'escreen-goto-screen-0)
-(global-set-key (kbd "M-2") 'escreen-goto-screen-1)
-(global-set-key (kbd "M-3") 'escreen-goto-screen-2)
-(global-set-key (kbd "M-4") 'escreen-goto-screen-3)
-(global-set-key (kbd "M-5") 'escreen-goto-screen-4)
-(global-set-key [S-right] 'escreen-goto-next-screen)
-(global-set-key [S-left]  'escreen-goto-prev-screen)
+  (load "escreen")
+  (escreen-install)
+  (global-set-key (kbd "M-1") 'escreen-goto-screen-0)
+  (global-set-key (kbd "M-2") 'escreen-goto-screen-1)
+  (global-set-key (kbd "M-3") 'escreen-goto-screen-2)
+  (global-set-key (kbd "M-4") 'escreen-goto-screen-3)
+  (global-set-key (kbd "M-5") 'escreen-goto-screen-4)
+  (global-set-key [S-right] 'escreen-goto-next-screen)
+  (global-set-key [S-left]  'escreen-goto-prev-screen)
 
-(global-set-key [C-right] 'escreen-goto-next-screen)
-(global-set-key [C-left]  'escreen-goto-prev-screen))
+  (global-set-key [C-right] 'escreen-goto-next-screen)
+  (global-set-key [C-left]  'escreen-goto-prev-screen))
 
 ;; ;; Locally defined recipe
 ;; (el-get-bundle escreen
