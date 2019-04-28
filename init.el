@@ -15,6 +15,38 @@
   (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+  (require 'cl)
+
+  (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+  (add-to-list 'load-path "~/.emacs.d/el-get")
+  (add-to-list 'load-path "~/.emacs.d/el-get/org-mode/lisp")
+  (add-to-list 'load-path "~/.emacs.d/el-get/org-mode/contrib/lisp")
+
+  ;; (require 'cl)
+  (unless (require 'el-get nil 'noerror)
+    (with-current-buffer
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (add-to-list 'el-get-recipe-path "~/.emacs.d/recipes")
+  (add-to-list 'load-path "~/.emacs.d/el-get/elfeed")
+
+  (setq el-get-dir "~/.emacs.d/el-get")
+
+  (el-get 'sync)
+
+  (set-language-environment "utf-8")
+
+  (defun elget-reload ()
+    (interactive)
+    (el-get-invalidate-autoloads))
+
+  (el-get-bundle use-package)
+  (el-get-bundle alert)
+  (use-package queue :ensure t)
+
+
   (setq
    frame-title-format '(buffer-file-name "%f" ("%b"))
    indent-tabs-mode nil
