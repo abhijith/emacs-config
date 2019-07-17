@@ -1,4 +1,4 @@
-(require 'packages)
+;; (require 'packages)
 
 ;; go-autocomplete dependency
 ;; go get -u github.com/mdempsky/gocode
@@ -8,9 +8,16 @@
 ;; go imports
 ;; go get golang.org/x/tools/cmd/goimports
 
-(install-packages '(go-mode go-complete go-autocomplete go-errcheck go-eldoc go-imports go-gopath))
+(el-get-bundle go-mode)
+(el-get-bundle go-autocomplete)
+(el-get-bundle go-errcheck)
+(el-get-bundle go-eldoc)
 
-(require 'go-mode)
+(el-get-bundle protobuf-mode)
+
+(use-package protobuf-mode)
+(use-package go-eldoc)
+(use-package go-mode)
 
 (defun my-go-mode-hook ()
   ; Use goimports instead of go-fmt
@@ -31,9 +38,8 @@
 (defun auto-complete-for-go ()
   (auto-complete-mode 1))
 
-(require 'go-eldoc)
+(use-package go-eldoc)
 (add-hook 'go-mode-hook 'go-eldoc-setup)
-
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
 (with-eval-after-load 'go-mode

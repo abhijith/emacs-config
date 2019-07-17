@@ -1,6 +1,6 @@
-(require 'packages)
-
-(install-packages '(company powerline jump exec-path-from-shell))
+(el-get-bundle exec-path-from-shell)
+(el-get-bundle company)
+(el-get-bundle powerline)
 
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
@@ -16,8 +16,8 @@
 ;; make emacs use the clipboard
 (setq x-select-enable-clipboard t)
 
-(require 'jump)
-(autoload 'defjump "jump-def" "Jump to a definition." t)
+;; (require 'jump)
+;; (autoload 'defjump "jump-def" "Jump to a definition." t)
 
 (setq resize-mini-windows nil)
 
@@ -39,8 +39,8 @@
 (exec-path-from-shell-initialize)
 
 
-(require 'powerline)
-; (powerline-default-theme)
+(use-package powerline)
+(powerline-default-theme)
 
 
 (provide 'init-0)

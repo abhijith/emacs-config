@@ -1,5 +1,3 @@
-(require 'packages)
-
 (el-get-bundle highline)
 (use-package highline)
 

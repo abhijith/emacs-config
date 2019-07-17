@@ -1,7 +1,5 @@
-(require 'packages)
-(install-packages '(json-mode))
-
-(require 'json-mode)
+(el-get-bundle json-mode)
+(use-package json-mode)
 
 (setq auto-mode-alist (cons '("\\.json\\'" . json-mode) auto-mode-alist))
 
