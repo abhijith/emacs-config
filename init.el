@@ -12,6 +12,8 @@
     (end-of-buffer)
     (eval-print-last-sexp)))
 
+(package-initialize)
+
 (set-language-environment "utf-8")
 
 (defun elget-reload ()
@@ -116,12 +118,14 @@
 ;; (setq my-packages
 ;;       (loop for src in el-get-sources collect (el-get-source-name src)))
 
+
+
+;; (add-to-list 'package-archives
+;;              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+;; (add-to-list 'package-archives
+;;  	     '("melpa" . "https://melpa.org/packages/"))
+
 (el-get 'sync)
 
-(package-initialize)
 
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))

@@ -9,7 +9,7 @@
     ("0c387e27a3dd040b33c6711ff92e13bd952369a788eee97e4e4ea2335ac5528f" "59e0b7fb483866fc28cbfa8ca32d7570d6dfb20b27ae87bb1a1a24eafb160da6" "d145a92283d7e3c3eadfe54a78250f7025682390fdb88fde7c6913d13ee30b44" default)))
  '(package-selected-packages
    (quote
-    (alert powerline queue flycheck-golangci-lint yaml-mode paredit markdown-mode json-mode haskell-mode go-errcheck go-eldoc go-autocomplete flycheck-rust exec-path-from-shell csv-mode company boxquote ac-cider))))
+    (lsp-mode rustic alert powerline queue flycheck-golangci-lint yaml-mode paredit markdown-mode json-mode haskell-mode go-errcheck go-eldoc go-autocomplete flycheck-rust exec-path-from-shell csv-mode company boxquote ac-cider))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
