@@ -8,16 +8,11 @@
 ;; go imports
 ;; go get golang.org/x/tools/cmd/goimports
 
-(el-get-bundle go-mode)
-(el-get-bundle go-autocomplete)
-(el-get-bundle go-errcheck)
-(el-get-bundle go-eldoc)
-
-(el-get-bundle protobuf-mode)
-
-(use-package protobuf-mode)
-(use-package go-eldoc)
-(use-package go-mode)
+(straight-use-package 'go-mode)
+(straight-use-package 'go-autocomplete)
+(straight-use-package 'go-errcheck)
+(straight-use-package 'go-eldoc)
+(straight-use-package 'protobuf-mode)
 
 (defun my-go-mode-hook ()
   ; Use goimports instead of go-fmt
@@ -35,15 +30,9 @@
   (add-hook 'before-save-hook 'gofmt-before-save)
   (setq tab-width 4 indent-tabs-mode 1))
 
-(defun auto-complete-for-go ()
-  (auto-complete-mode 1))
-
-(use-package go-eldoc)
 (add-hook 'go-mode-hook 'go-eldoc-setup)
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
 (with-eval-after-load 'go-mode
   (require 'go-autocomplete)
   (ac-config-default))
-
-(provide 'init-go)

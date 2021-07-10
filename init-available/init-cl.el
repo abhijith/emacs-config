@@ -1,6 +1,5 @@
-(require 'packages)
-
-(install-packages '(parenface paredit))
+(straight-use-package 'paren-face)
+(straight-use-package 'paredit)
 
 (defun pretty-lambdas ()
   (font-lock-add-keywords
@@ -14,9 +13,6 @@
 (define-key lisp-mode-shared-map (kbd "RET") 'reindent-then-newline-and-indent)
 (define-key lisp-mode-shared-map (kbd "C-c v") 'eval-buffer)
 
-(require 'parenface)
-
-(require 'paredit)
 (paredit-mode 1)
 
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
@@ -32,9 +28,7 @@
 
 (define-key emacs-lisp-mode-map (kbd "M-.") 'find-function-at-point)
 
-
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
-(require 'slime)
 
 (slime-setup '(slime-tramp
                slime-asdf
@@ -44,5 +38,3 @@
  inferior-lisp-program "sbcl"
  slime-complete-symbol-function 'slime-fuzzy-complete-symbol
  slime-startup-animation t)
-
-(provide 'init-cl)

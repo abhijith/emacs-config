@@ -1,7 +1,7 @@
-(el-get-bundle yaml-mode)
-(el-get-bundle json-mode)
-(el-get-bundle boxquote)
-(el-get-bundle csv-mode)
-(el-get-bundle markdown-mode)
+(use-package yaml-mode :straight t)
+(use-package json-mode :straight t)
+(use-package boxquote :straight t)
+(use-package csv-mode :straight t)
+(use-package markdown-mode :straight t)
 
 (provide 'init-text)

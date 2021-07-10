@@ -1,5 +1,4 @@
-(el-get-bundle json-mode)
-(use-package json-mode)
+(use-package json-mode :straight t)
 
 (setq auto-mode-alist (cons '("\\.json\\'" . json-mode) auto-mode-alist))
 
@@ -9,7 +8,5 @@
         (e (if mark-active (max (point) (mark)) (point-max))))
     (shell-command-on-region b e
      "python -c 'import sys,json; data=json.loads(sys.stdin.read()); print json.dumps(data,sort_keys=True,indent=4).decode(\"unicode_escape\").encode(\"utf8\",\"replace\")'" (current-buffer) t)))
-
-(define-key json-mode-map (kbd "C-c C-f") 'beautify-json)
 
 (provide 'init-json)

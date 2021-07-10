@@ -1,16 +1,11 @@
-(el-get-bundle highline)
-(use-package highline)
+(use-package highline :straight t)
+(use-package dired-details :straight t)
+(use-package wdired :straight t)
 
 (defun highline-mode-on () (highline-mode 1))
 (add-hook 'dired-after-readin-hook #'highline-mode-on)
 
-(el-get-bundle dired-details)
-(use-package dired-details)
-(dired-details-install)
 (setq dired-details-hidden-string "")
-
-(el-get-bundle wdired)
-(use-package wdired)
 
 (defun dired-lynx-keybindings ()
   (define-key dired-mode-map [left]  'dired-up-directory)
@@ -19,6 +14,8 @@
 (add-hook 'dired-mode-hook 'dired-lynx-keybindings)
 
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
+(dired-details-install)
+
 (add-hook 'dired-load-hook
 	(lambda ()
 		(load "dired-x")

@@ -1,9 +1,11 @@
-(el-get-bundle exec-path-from-shell)
-(el-get-bundle company)
-(el-get-bundle powerline)
+(use-package exec-path-from-shell :straight t)
+(use-package company :straight t)
+(use-package powerline :straight t)
+(use-package powerline :straight t)
 
-(setq dotfiles-dir (file-name-directory
-                    (or (buffer-file-name) load-file-name)))
+(setq dotfiles-dir
+      (file-name-directory
+       (or (buffer-file-name) load-file-name)))
 
 (add-hook 'before-make-frame-hook 'turn-off-tool-bar)
 
@@ -15,9 +17,6 @@
 
 ;; make emacs use the clipboard
 (setq x-select-enable-clipboard t)
-
-;; (require 'jump)
-;; (autoload 'defjump "jump-def" "Jump to a definition." t)
 
 (setq resize-mini-windows nil)
 
@@ -38,9 +37,6 @@
 
 (exec-path-from-shell-initialize)
 
-
-(use-package powerline)
 (powerline-default-theme)
-
 
 (provide 'init-0)
