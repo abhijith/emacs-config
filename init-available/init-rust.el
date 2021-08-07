@@ -3,10 +3,10 @@
 (use-package cargo :straight t)
 (use-package flycheck-rust :straight t)
 
-
 (setq rust-format-on-save t)
 (setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library")
 (setq company-tooltip-align-annotations t)
+(setq company-idle-delay 0.8)
 
 (add-hook 'rust-mode-hook
           (lambda ()
@@ -18,6 +18,6 @@
 (add-hook 'racer-mode-hook #'flycheck-mode)
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
-;; (define-key rust-mode-map (kbd "TAB") 'company-indent-or-complete-common)
+(define-key rust-mode-map (kbd "TAB") 'company-indent-or-complete-common)
 
 (provide 'init-rust)
