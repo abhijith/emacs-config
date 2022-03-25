@@ -58,10 +58,10 @@
   :commands lsp
   :custom
   ;; what to use when checking on-save. "check" is default, I prefer clippy
-  (lsp-rust-analyzer-cargo-watch-command "clippy")
+  ;; (lsp-rust-analyzer-cargo-watch-command "clippy")
   (lsp-eldoc-render-all t)
-  (lsp-idle-delay 0.6)
-  (lsp-rust-analyzer-server-display-inlay-hints t)
+  (lsp-idle-delay 1)
+  (lsp-rust-analyzer-server-display-inlay-hints nil)
   :config
   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
@@ -69,8 +69,8 @@
   :straight t
   :commands lsp-ui-mode
   :custom
-  (lsp-ui-peek-always-show t)
-  (lsp-ui-sideline-show-hover t)
+  (lsp-ui-peek-always-show nil)
+  (lsp-ui-sideline-show-hover nil)
   (lsp-ui-doc-enable nil))
 
 (use-package company
@@ -85,11 +85,11 @@
 	("M-<". company-select-first)
 	("M->". company-select-last)))
 
-(use-package company
-  ;; ... see above ...
-  (:map company-mode-map
-	("<tab>". tab-indent-or-complete)
-	("TAB". tab-indent-or-complete)))
+;; (use-package company
+;;   ;; ... see above ...
+;;   (:map company-mode-map
+;; 	("<tab>". tab-indent-or-complete)
+;; 	("TAB". tab-indent-or-complete)))
 
 
 (defun tab-indent-or-complete ()
