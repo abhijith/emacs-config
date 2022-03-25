@@ -98,3 +98,5 @@
 	 :gdbpath "rust-lldb"
          :target nil
          :cwd nil)))
+
+(provide 'init-rustic)

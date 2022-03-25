@@ -36,3 +36,5 @@
 (with-eval-after-load 'go-mode
   (require 'go-autocomplete)
   (ac-config-default))
+
+(provide 'init-go)
