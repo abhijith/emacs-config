@@ -88,3 +88,6 @@
       (directory-files "~/.emacs.d/init-enabled" nil "\\.el$"))
 
 (put 'upcase-region 'disabled nil)
+
+(setq auto-save-default nil)
+(setq create-lockfiles nil)

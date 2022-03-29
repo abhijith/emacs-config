@@ -1,6 +1,14 @@
+;;;;;;;; pre-requisites
+
+;; rust-analyzer: https://rust-analyzer.github.io/manual.html#emacs
+;; mkdir ~/.local/bin
+;; curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - > ~/.local/bin/rust-analyzer
+;; chmod +x ~/.local/bin/rust-analyzer
+
 (use-package rustic
   :straight t
   :bind (:map rustic-mode-map
+	      ("TAB" . company-indent-or-complete-common)
               ("M-j" . lsp-ui-imenu)
               ("M-?" . lsp-find-references)
               ("C-c C-c l" . flycheck-list-errors)
@@ -15,14 +23,14 @@
   ;; (setq lsp-enable-symbol-highlighting nil)
   ;; (setq lsp-signature-auto-activate nil)
 
-  ;; plain
+  ;; uncomment for plain lsp
 
-
-  (setq lsp-enable-symbol-highlighting nil)
+  ;; (setq lsp-enable-symbol-highlighting nil)
 
   (setq lsp-ui-doc-enable nil)
   (setq lsp-ui-doc-show-with-cursor nil)
   (setq lsp-ui-doc-show-with-mouse nil)
+
   (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-sideline-show-code-actions nil)
   (setq lsp-ui-sideline-enable nil)
@@ -33,19 +41,19 @@
   (setq lsp-lens-enable nil)
   (setq lsp-headerline-breadcrumb-enable nil)
 
-  (setq lsp-diagnostics-provider :none)
+  ;; (setq lsp-diagnostics-provider :none)
 
   (setq lsp-eldoc-enable-hover nil)
 
   (setq lsp-modeline-diagnostics-enable nil)
   (setq lsp-modeline-code-actions-enable nil)
 
-  (setq lsp-signature-auto-activate nil) ;; you could manually request them via `lsp-signature-activate`
-  (setq lsp-signature-render-documentation nil)
+  ;; (setq lsp-signature-auto-activate nil) ;; you could manually request them via `lsp-signature-activate`
+  ;; (setq lsp-signature-render-documentation nil)
 
-  (setq lsp-completion-provider :none)
+  ;; (setq lsp-completion-provider :none)
   (setq lsp-completion-show-detail nil)
-  (setq lsp-completion-show-kind nil)
+  ;; (setq lsp-completion-show-kind nil)
 
 
   ;; comment to disable rustfmt on save
@@ -66,7 +74,7 @@
   :custom
   ;; what to use when checking on-save. "check" is default, I prefer clippy
   ;; (lsp-rust-analyzer-cargo-watch-command "clippy")
-  (lsp-eldoc-render-all t)
+  ;; (lsp-eldoc-render-all t)
   (lsp-idle-delay 1)
   (lsp-rust-analyzer-server-display-inlay-hints nil)
   :config
@@ -108,6 +116,14 @@
       (indent-for-tab-command))))
 
 (use-package flycheck :straight t)
+(use-package flycheck-rust :straight t)
+
+;; (add-hook 'rustic-mode-hook #'flycheck-mode)
+;; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+
+
+;; (with-eval-after-load 'rustic-mode
+;;   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 (use-package exec-path-from-shell
   :straight t
