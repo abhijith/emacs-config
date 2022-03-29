@@ -19,23 +19,30 @@
 
 
   (setq lsp-enable-symbol-highlighting nil)
+
   (setq lsp-ui-doc-enable nil)
   (setq lsp-ui-doc-show-with-cursor nil)
   (setq lsp-ui-doc-show-with-mouse nil)
-  (setq lsp-lens-enable nil)
-  (setq lsp-headerline-breadcrumb-enable nil)
   (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-sideline-show-code-actions nil)
   (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-sideline-show-hover nil)
-  (setq lsp-modeline-code-actions-enable nil)
-  (setq lsp-diagnostics-provider :none)
   (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-sideline-show-diagnostics nil)
+
+  (setq lsp-lens-enable nil)
+  (setq lsp-headerline-breadcrumb-enable nil)
+
+  (setq lsp-diagnostics-provider :none)
+
   (setq lsp-eldoc-enable-hover nil)
+
   (setq lsp-modeline-diagnostics-enable nil)
+  (setq lsp-modeline-code-actions-enable nil)
+
   (setq lsp-signature-auto-activate nil) ;; you could manually request them via `lsp-signature-activate`
   (setq lsp-signature-render-documentation nil)
+
   (setq lsp-completion-provider :none)
   (setq lsp-completion-show-detail nil)
   (setq lsp-completion-show-kind nil)
