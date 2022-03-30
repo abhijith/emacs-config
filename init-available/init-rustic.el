@@ -58,6 +58,7 @@
 
   ;; comment to disable rustfmt on save
   (setq rustic-format-on-save t)
+  (add-hook 'rustic-mode-hook 'rainbow-delimiters-mode)
   (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
 
 (defun rk/rustic-mode-hook ()
