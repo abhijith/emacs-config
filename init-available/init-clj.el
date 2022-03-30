@@ -1,7 +1,7 @@
-(el-get-bundle clojure-mode)
-(el-get-bundle cider)
-(el-get-bundle ac-cider)
-(el-get-bundle paredit)
+(use-package clojure-mode :straight t)
+(use-package cider :straight t)
+(use-package ac-cider :straight t)
+(use-package paredit :straight t)
 
 (defmacro defclojureface (name color desc &optional others)
   `(defface ,name '((((class color)) (:foreground ,color ,@others))) ,desc :group 'faces))
@@ -75,8 +75,9 @@
 ;; (add-hook 'cider-mode-hook 'set-auto-complete-as-completion-at-point-function)
 (add-hook 'cider-mode-hook 'eldoc-mode)
 (setq cider-repl-use-clojure-font-lock t)
+
 ;; ;; clojure stuff
-(use-package company)
+(use-package company :straight t)
 (add-hook 'cider-repl-mode-hook 'company-mode)
 (add-hook 'cider-mode-hook 'company-mode)
 
