@@ -47,6 +47,8 @@
 
   (setq lsp-modeline-diagnostics-enable nil)
   (setq lsp-modeline-code-actions-enable nil)
+  ;; (setq lsp-rust-target-dir "~/.cargo/target")
+
 
   ;; (setq lsp-signature-auto-activate nil) ;; you could manually request them via `lsp-signature-activate`
   ;; (setq lsp-signature-render-documentation nil)
