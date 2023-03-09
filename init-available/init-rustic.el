@@ -7,6 +7,7 @@
 
 (use-package rustic
   :straight t
+  :init (setq rustic-treesitter-derive t)
   :bind (:map rustic-mode-map
 	      ("TAB" . company-indent-or-complete-common)
               ("M-j" . lsp-ui-imenu)
@@ -43,7 +44,7 @@
 
   ;; (setq lsp-diagnostics-provider :none)
 
-  (setq lsp-eldoc-enable-hover nil)
+  (setq lsp-eldoc-enable-hover t)
 
   (setq lsp-modeline-diagnostics-enable nil)
   (setq lsp-modeline-code-actions-enable nil)
@@ -118,8 +119,8 @@
 	(company-complete-common)
       (indent-for-tab-command))))
 
-(use-package flycheck :straight t)
-(use-package flycheck-rust :straight t)
+;; (use-package flycheck :straight t)
+;; (use-package flycheck-rust :straight t)
 
 ;; (add-hook 'rustic-mode-hook #'flycheck-mode)
 ;; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
@@ -127,6 +128,8 @@
 
 ;; (with-eval-after-load 'rustic-mode
 ;;   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
+(flycheck-mode nil)
 
 (use-package exec-path-from-shell
   :straight t
