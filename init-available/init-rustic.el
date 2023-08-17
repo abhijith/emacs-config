@@ -61,8 +61,11 @@
 
   ;; comment to disable rustfmt on save
   (setq rustic-format-on-save t)
+  (setq lsp-rust-analyzer-proc-macro-enable nil)
   (add-hook 'rustic-mode-hook 'rainbow-delimiters-mode)
-  (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
+  (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook)
+  (add-hook 'rustic-mode-hook #'(lambda () (flymake-mode nil))))
+
 
 (defun rk/rustic-mode-hook ()
   ;; so that run C-c C-c C-r works without having to confirm, but don't try to
@@ -129,7 +132,7 @@
 ;; (with-eval-after-load 'rustic-mode
 ;;   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
-(flycheck-mode nil)
+;; (flycheck-mode nil)
 
 (use-package exec-path-from-shell
   :straight t
@@ -153,5 +156,7 @@
 	 :gdbpath "rust-lldb"
          :target nil
          :cwd nil)))
+
+
 
 (provide 'init-rustic)
