@@ -44,7 +44,7 @@
 
   ;; (setq lsp-diagnostics-provider :none)
 
-  (setq lsp-eldoc-enable-hover t)
+  (setq lsp-eldoc-enable-hover nil)
 
   (setq lsp-modeline-diagnostics-enable nil)
   (setq lsp-modeline-code-actions-enable nil)
@@ -85,7 +85,8 @@
   (lsp-idle-delay 1)
   (lsp-rust-analyzer-server-display-inlay-hints nil)
   :config
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  (add-hook 'lsp-mode-hook #'(lambda () (flymake-mode nil))))
 
 (use-package lsp-ui
   :straight t
@@ -98,7 +99,7 @@
 (use-package company
   :straight t
   :custom
-  (company-idle-delay 0.5) ;; how long to wait until popup
+  (company-idle-delay 1) ;; how long to wait until popup
   ;; (company-begin-commands nil) ;; uncomment to disable popup
   :bind
   (:map company-active-map
@@ -108,31 +109,31 @@
 	("M->". company-select-last)))
 
 ;; (use-package company
-;;   ;; ... see above ...
+;;   :straight t
+;;   :bind
 ;;   (:map company-mode-map
 ;; 	("<tab>". tab-indent-or-complete)
 ;; 	("TAB". tab-indent-or-complete)))
 
 
-(defun tab-indent-or-complete ()
-  (interactive)
-  (if (minibufferp)
-      (minibuffer-complete)
-    (if (check-expansion)
-	(company-complete-common)
-      (indent-for-tab-command))))
+;; (defun tab-indent-or-complete ()
+;;   (interactive)
+;;   (if (minibufferp)
+;;       (minibuffer-complete)
+;;     (if (check-expansion)
+;; 	(company-complete-common)
+;;       (indent-for-tab-command))))
 
-;; (use-package flycheck :straight t)
-;; (use-package flycheck-rust :straight t)
+(use-package flycheck :straight t)
+(use-package flycheck-rust :straight t)
 
-;; (add-hook 'rustic-mode-hook #'flycheck-mode)
-;; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+(add-hook 'rustic-mode-hook #'flycheck-mode)
+(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
+(with-eval-after-load 'rustic-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
-;; (with-eval-after-load 'rustic-mode
-;;   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-
-;; (flycheck-mode nil)
+(flycheck-mode nil)
 
 (use-package exec-path-from-shell
   :straight t
