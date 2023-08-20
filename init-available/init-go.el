@@ -8,11 +8,12 @@
 ;; go imports
 ;; go get golang.org/x/tools/cmd/goimports
 
-(straight-use-package 'go-mode)
+(use-package go-mode
+  :straight t)
 ;; (straight-use-package 'go-autocomplete)
 ;; (straight-use-package 'go-errcheck)
 ;; (straight-use-package 'go-eldoc)
-(straight-use-package 'protobuf-mode)
+(use-package protobuf-mode :straight t)
 
 ;; (defun my-go-mode-hook ()
 ;;   ; Use goimports instead of go-fmt
@@ -48,8 +49,9 @@
 
 ;; (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
-(straight-use-package 'lsp-mode)
-(add-hook 'go-mode-hook #'lsp-deferred)
+(use-package lsp-mode
+  :straight t
+  :config (add-hook 'go-mode-hook #'lsp-deferred))
 
 ;; Set up before-save hooks to format buffer and add/delete imports.
 ;; Make sure you don't have other gofmt/goimports hooks enabled.

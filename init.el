@@ -391,12 +391,25 @@
   :config
   (add-hook 'magit-status-mode-hook 'magit-filenotify-mode))
 
-;; mastering emacs
 
-(global-set-key (kbd "M-o") 'other-window)
 
-(windmove-default-keybindings 'meta)
-
+;; my customizations
 (use-package beacon
   :straight t
   :config (beacon-mode t))
+
+;; mastering emacs
+
+;; (global-set-key (kbd "M-o") 'other-window)
+
+;; (use-package windmove
+;;   :straight t
+;;   :config
+;;   (windmove-default-keybindings 'meta)
+;;   (setq windmove-wrap-around t)
+;;   (bind-key [M-right] 'windmove-right)
+;;   (bind-key [M-left]  'windmove-left)
+;;   (bind-key [M-up] 'windmove-up)
+;;   (bind-key [M-down]  'windmove-down))
+
+(windmove-default-keybindings 'meta)

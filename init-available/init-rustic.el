@@ -158,6 +158,6 @@
          :target nil
          :cwd nil)))
 
-
+(superword-mode t)
 
 (provide 'init-rustic)
