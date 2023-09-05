@@ -398,6 +398,12 @@
   :straight t
   :config (beacon-mode t))
 
+(use-package terraform-mode
+  :straight t
+  :config (progn
+	    (add-hook 'terraform-mode-hook #'outline-minor-mode)
+	    (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode)))
+
 ;; mastering emacs
 
 ;; (global-set-key (kbd "M-o") 'other-window)
