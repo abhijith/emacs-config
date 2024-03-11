@@ -3,6 +3,8 @@
 (use-package powerline :straight t)
 (use-package powerline :straight t)
 
+(use-package git-timemachine :straight t)
+
 (setq dotfiles-dir
       (file-name-directory
        (or (buffer-file-name) load-file-name)))

@@ -62,9 +62,6 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(progn
-  (load-theme 'dusk)
-  (set-face-attribute 'default nil :height 92))
 
 ;; Simple package names
 (progn
@@ -317,6 +314,7 @@
 (defun dired-lynx-keybindings ()
   (define-key dired-mode-map [left]  'dired-up-directory)
   (define-key dired-mode-map [right] 'dired-view-file))
+
 (add-hook 'dired-mode-hook 'dired-lynx-keybindings)
 (add-hook 'dired-mode-hook #'highline-mode-on)
 
@@ -355,36 +353,36 @@
   (dolist (m '("AC" "Undo-Tree" "ARev" "Anzu" "Guide" "company"))
     (add-to-list 'sml/hidden-modes (concat " " m))))
 
-(use-package magit
-  :straight t
-  :init
-  (progn
-    (add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . diff-mode)))
-  :config
-  (setq magit-auto-revert-mode 1
-	magit-last-seen-setup-instructions "1.4.0"
-	diff-switches "-u"
-	magit-push-always-verify nil
-	magit-git-executable "git"
-	magit-save-repository-buffers 'dontask
-	magit-default-tracking-name-function
-	#'magit-default-tracking-name-branch-only)
-  (add-hook 'magit-mode-hook #'highline-mode-on)
-  (setq magit-repolist-columns
-	'(("Name"       25  magit-repolist-column-ident nil)
-          ("Branch"     10  magit-repolist-column-branch)
-          ("Version"    25  magit-repolist-column-version nil)
-          ("↓P"         5   magit-repolist-column-unpulled-from-pushremote)
-          ("↑P"         5   magit-repolist-column-unpushed-to-pushremote)
-          (""           6   magit-repolist-column-dirty)
-          ("Path"       99  magit-repolist-column-path nil)))
-  :bind
-  (("C-c m" . magit-status)
-   ("C-c l" . magit-log-buffer-file)
-   ("C-c L" . magit-log-head)
-   ("C-c o" . magit-checkout)
-   ("C-c d" . magit-diff-buffer-file)
-("C-c D" . magit-diff)))
+;; (use-package magit
+;;   :straight t
+;;   :init
+;;   (progn
+;;     (add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . diff-mode)))
+;;   :config
+;;   (setq magit-auto-revert-mode 1
+;; 	magit-last-seen-setup-instructions "1.4.0"
+;; 	diff-switches "-u"
+;; 	magit-push-always-verify nil
+;; 	magit-git-executable "git"
+;; 	magit-save-repository-buffers 'dontask
+;; 	magit-default-tracking-name-function
+;; 	#'magit-default-tracking-name-branch-only)
+;;   (add-hook 'magit-mode-hook #'highline-mode-on)
+;;   (setq magit-repolist-columns
+;; 	'(("Name"       25  magit-repolist-column-ident nil)
+;;           ("Branch"     10  magit-repolist-column-branch)
+;;           ("Version"    25  magit-repolist-column-version nil)
+;;           ("↓P"         5   magit-repolist-column-unpulled-from-pushremote)
+;;           ("↑P"         5   magit-repolist-column-unpushed-to-pushremote)
+;;           (""           6   magit-repolist-column-dirty)
+;;           ("Path"       99  magit-repolist-column-path nil)))
+;;   :bind
+;;   (("C-c m" . magit-status)
+;;    ("C-c l" . magit-log-buffer-file)
+;;    ("C-c L" . magit-log-head)
+;;    ("C-c o" . magit-checkout)
+;;    ("C-c d" . magit-diff-buffer-file)
+;;    ("C-c D" . magit-diff)))
 
 (use-package magit-filenotify
   :straight t
@@ -404,6 +402,9 @@
 	    (add-hook 'terraform-mode-hook #'outline-minor-mode)
 	    (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode)))
 
+(use-package dockerfile-mode
+  :straight t)
+
 ;; mastering emacs
 
 ;; (global-set-key (kbd "M-o") 'other-window)
@@ -419,3 +420,9 @@
 ;;   (bind-key [M-down]  'windmove-down))
 
 (windmove-default-keybindings 'meta)
+
+(progn
+  (load-theme 'dusk)
+  (set-face-attribute 'default nil :height 110)
+  (set-face-attribute 'default nil :height 92)
+  (format "initalized"))
