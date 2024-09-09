@@ -15,6 +15,10 @@
 
 ;;; start customizations
 
+(setq straight-disable-native-compile t
+      straight-check-for-modifications nil
+      straight-use-package-by-default t)
+
 (straight-use-package 'use-package)
 (straight-use-package 'alert)
 (straight-use-package 'company-mode)
@@ -169,98 +173,98 @@
 
 ;; expanding
 
-;; (defvar mode-specified-try-functions-table (make-hash-table))
+(defvar mode-specified-try-functions-table (make-hash-table))
 
-;; (defun set-mode-specified-try-functions (mode functions)
-;;   (setf (gethash mode mode-specified-try-functions-table)
-;; 	functions))
+(defun set-mode-specified-try-functions (mode functions)
+  (setf (gethash mode mode-specified-try-functions-table)
+	functions))
 
-;; (defun set-default-try-functions (functions)
-;;   (setf (gethash :default mode-specified-try-functions-table)
-;; 	functions))
+(defun set-default-try-functions (functions)
+  (setf (gethash :default mode-specified-try-functions-table)
+	functions))
 
-;; (defun expand-try-functions-of (mode)
-;;   (let ((result
-;; 	 (gethash mode mode-specified-try-functions-table)))
-;;     (if (listp result) result
-;;       (list result))))
+(defun expand-try-functions-of (mode)
+  (let ((result
+	 (gethash mode mode-specified-try-functions-table)))
+    (if (listp result) result
+      (list result))))
 
-;; (defun current-hippie-expand-try-function-list ()
-;;   (remove-duplicates
-;;    (remove nil
-;; 	   (append
-;; 	    (apply
-;; 	     'append
-;; 	     (mapcar 'expand-try-functions-of minor-mode-list))
-;; 	    (expand-try-functions-of major-mode)
-;; 	    (expand-try-functions-of :default)))
-;;    :from-end t))
+(defun current-hippie-expand-try-function-list ()
+  (remove-duplicates
+   (remove nil
+	   (append
+	    (apply
+	     'append
+	     (mapcar 'expand-try-functions-of minor-mode-list))
+	    (expand-try-functions-of major-mode)
+	    (expand-try-functions-of :default)))
+   :from-end t))
 
-;; (defadvice hippie-expand (around mode-specified-hippie-expand)
-;;   (let ((hippie-expand-try-functions-list
-;; 	 (current-hippie-expand-try-function-list)))
-;;     ad-do-it))
+(defadvice hippie-expand (around mode-specified-hippie-expand)
+  (let ((hippie-expand-try-functions-list
+	 (current-hippie-expand-try-function-list)))
+    ad-do-it))
 
-;; (defun enable-mode-specified-hippie-expand ()
-;;   (interactive)
-;;   (ad-enable-advice 'hippie-expand
-;; 		    'around
-;; 		    'mode-specified-hippie-expand)
-;;   (ad-activate 'hippie-expand))
+(defun enable-mode-specified-hippie-expand ()
+  (interactive)
+  (ad-enable-advice 'hippie-expand
+		    'around
+		    'mode-specified-hippie-expand)
+  (ad-activate 'hippie-expand))
 
-;; (defun disable-mode-specified-hippie-expand ()
-;;   (interactive)
-;;   (ad-disable-advice 'hippie-expand
-;; 		     'around
-;; 		     'mode-specified-hippie-expand)
-;;   (ad-deactivate 'hippie-expand))
+(defun disable-mode-specified-hippie-expand ()
+  (interactive)
+  (ad-disable-advice 'hippie-expand
+		     'around
+		     'mode-specified-hippie-expand)
+  (ad-deactivate 'hippie-expand))
 
-;; (set-default-try-functions
-;;  '(try-expand-dabbrev
-;;    try-expand-all-abbrevs
-;;    try-expand-dabbrev-all-buffers
-;;    try-expand-list
-;;    try-expand-line
-;;    try-expand-dabbrev-from-kill))
+(set-default-try-functions
+ '(try-expand-dabbrev
+   try-expand-all-abbrevs
+   try-expand-dabbrev-all-buffers
+   try-expand-list
+   try-expand-line
+   try-expand-dabbrev-from-kill))
 
-;; (set-mode-specified-try-functions
-;;  'emacs-lisp-mode
-;;  '(try-complete-lisp-symbol-partially
-;;    try-complete-lisp-symbol))
+(set-mode-specified-try-functions
+ 'emacs-lisp-mode
+ '(try-complete-lisp-symbol-partially
+   try-complete-lisp-symbol))
 
-;; (defun tags-complete-tag (string predicate what)
-;;   (save-excursion
-;;     ;; If we need to ask for the tag table, allow that.
-;;     (if (eq what t)
-;; 	(all-completions string (tags-completion-table) predicate)
-;;       (try-completion string (tags-completion-table) predicate))))
-
-
-;; (defun he-tag-beg ()
-;;   (let ((p
-;;          (save-excursion
-;;            (backward-word 1)
-;;            (point))))
-;;     p))
-
-;; (defun try-expand-tag (old)
-;;   (unless  old
-;;     (he-init-string (he-tag-beg) (point))
-;;     (setq he-expand-list (sort
-;;                           (all-completions he-search-string 'tags-complete-tag) 'string-lessp)))
-;;   (while (and he-expand-list
-;;               (he-string-member (car he-expand-list) he-tried-table))
-;;               (setq he-expand-list (cdr he-expand-list)))
-;;   (if (null he-expand-list)
-;;       (progn
-;;         (when old (he-reset-string))
-;;         ())
-;;     (he-substitute-string (car he-expand-list))
-;;     (setq he-expand-list (cdr he-expand-list))
-;;     t))
+(defun tags-complete-tag (string predicate what)
+  (save-excursion
+    ;; If we need to ask for the tag table, allow that.
+    (if (eq what t)
+	(all-completions string (tags-completion-table) predicate)
+      (try-completion string (tags-completion-table) predicate))))
 
 
-;; (global-set-key [remap dabbrev-expand] 'hippie-expand)
+(defun he-tag-beg ()
+  (let ((p
+         (save-excursion
+           (backward-word 1)
+           (point))))
+    p))
+
+(defun try-expand-tag (old)
+  (unless  old
+    (he-init-string (he-tag-beg) (point))
+    (setq he-expand-list (sort
+                          (all-completions he-search-string 'tags-complete-tag) 'string-lessp)))
+  (while (and he-expand-list
+              (he-string-member (car he-expand-list) he-tried-table))
+              (setq he-expand-list (cdr he-expand-list)))
+  (if (null he-expand-list)
+      (progn
+        (when old (he-reset-string))
+        ())
+    (he-substitute-string (car he-expand-list))
+    (setq he-expand-list (cdr he-expand-list))
+    t))
+
+
+(global-set-key [remap dabbrev-expand] 'hippie-expand)
 
 ;; (defun smart-tab ()
 ;;   (interactive)
@@ -426,3 +430,42 @@
   (set-face-attribute 'default nil :height 110)
   (set-face-attribute 'default nil :height 92)
   (format "initalized"))
+
+(put 'downcase-region 'disabled nil)
+
+
+(use-package eglot
+  :straight t
+  :config
+  (setq eglot-send-changes-idle-time (* 60 60))
+  (add-to-list 'eglot-stay-out-of 'flymake)
+  (add-hook 'eglot-managed-mode-hook (lambda ()
+				       (eldoc-mode 1)
+				       (flymake-mode 1))))
+
+(defclass eglot-rust-x-analyzer (eglot-lsp-server) ()
+  :documentation "A custom class for rust-analyzer.")
+
+(cl-defmethod eglot-initialization-options ((server eglot-rust-x-analyzer))
+  '(:rust-analyzer
+    ( :procMacro ( :attributes (:enable t)
+		   :enable t)
+      :cargo (:buildScripts (:enable t))
+      :diagnostics (:disabled ["unresolved-proc-macro"
+			       "unresolved-macro-call"]))))
+
+(setq eglot-server-programs
+      '((python-mode . ("pyls"))
+	(clojure-mode . ("clojure-lsp"))
+	(elixir-mode . ("language_server.sh"))
+	(caml-mode . ("ocamllsp"))
+	(erlang-mode . ("erlang_ls" "--transport" "stdio"))
+	(rust-mode . (eglot-rust-x-analyzer "rust-analyzer" "-v"
+					    "--log-file" "/tmp/ra.log"))))
+
+
+(defun eglot-connect ()
+  (interactive)
+  (eglot-ensure))
+
+(menu-bar-mode -1)
