@@ -114,61 +114,61 @@
   (which-key-mode))
 
 
-;; ;;;;;;;;;;; rust-mode
+;;;;;;;;;;; rust-mode
 
-;; (use-package rust-mode
-;;   :straight t
-;;   :mode ("\\.rs$" . rust-mode)
-;;   :config
-;;   (progn
-;;     (electric-indent-mode 0)
-;;     (setq rust-format-on-save t)
-;;     (add-hook 'rust-mode-hook
-;; 	      (lambda ()
-;; 		(setq indent-tabs-mode nil)
-;; 		(setq prettify-symbols-alist
-;; 		      '(("fn" . 955)
-;; 			("->" . 8594))))))
-;;   :bind
-;;   (:map rust-mode-map
-;; 	("C-c C-c" . rust-compile)
-;; 	("C-c C-l" . rust-run-clippy)
-;; 	("C-c C-d" . eldoc-print-current-symbol-info)))
+(use-package rust-mode
+  :straight t
+  :mode ("\\.rs$" . rust-mode)
+  :config
+  (progn
+    (electric-indent-mode 0)
+    (setq rust-format-on-save t)
+    (add-hook 'rust-mode-hook
+	      (lambda ()
+		(setq indent-tabs-mode nil)
+		(setq prettify-symbols-alist
+		      '(("fn" . 955)
+			("->" . 8594))))))
+  :bind
+  (:map rust-mode-map
+	("C-c C-c" . rust-compile)
+	("C-c C-l" . rust-run-clippy)
+	("C-c C-d" . eldoc-print-current-symbol-info)))
 
 
-;; (use-package xref
-;;   :straight t
-;;   :bind (("M-." . #'xref-find-definitions)
-;;          ("M-/" . #'xref-go-back)
-;;          ("M-r" . #'xref-find-references)))
+(use-package xref
+  :straight t
+  :bind (("M-." . #'xref-find-definitions)
+         ("M-/" . #'xref-go-back)
+         ("M-r" . #'xref-find-references)))
 
-;; (use-package eglot
-;;   :straight t
-;;   :config
-;;   (setq eglot-send-changes-idle-time (* 60 60))
-;;   (add-to-list 'eglot-stay-out-of 'flymake)
-;;   (add-hook 'eglot-managed-mode-hook (lambda ()
-;; 				       (eldoc-mode 1)
-;; 				       (flymake-mode 1))))
+(use-package eglot
+  :straight t
+  :config
+  (setq eglot-send-changes-idle-time (* 60 60))
+  (add-to-list 'eglot-stay-out-of 'flymake)
+  (add-hook 'eglot-managed-mode-hook (lambda ()
+				       (eldoc-mode 1)
+				       (flymake-mode 1))))
 
-;; (defclass eglot-rust-x-analyzer (eglot-lsp-server) ()
-;;   :documentation "A custom class for rust-analyzer.")
+(defclass eglot-rust-x-analyzer (eglot-lsp-server) ()
+  :documentation "A custom class for rust-analyzer.")
 
-;; (cl-defmethod eglot-initialization-options ((server eglot-rust-x-analyzer))
-;;   '(:rust-analyzer
-;;     ( :procMacro ( :attributes (:enable t)
-;; 		   :enable t)
-;;       :cargo (:buildScripts (:enable t))
-;;       :diagnostics (:disabled ["unresolved-proc-macro"
-;; 			       "unresolved-macro-call"]))))
+(cl-defmethod eglot-initialization-options ((server eglot-rust-x-analyzer))
+  '(:rust-analyzer
+    ( :procMacro ( :attributes (:enable t)
+		   :enable t)
+      :cargo (:buildScripts (:enable t))
+      :diagnostics (:disabled ["unresolved-proc-macro"
+			       "unresolved-macro-call"]))))
 
-;; (add-to-list 'eglot-server-programs
-;;              '(rust-mode . (eglot-rust-x-analyzer "rust-analyzer" "-v"
-;; 						  "--log-file" "/tmp/ra.log")))
+(add-to-list 'eglot-server-programs
+             '(rust-mode . (eglot-rust-x-analyzer "rust-analyzer" "-v"
+						  "--log-file" "/tmp/ra.log")))
 
-;; (defun eglot-connect ()
-;;   (interactive)
-;;   (eglot-ensure))
+(defun eglot-connect ()
+  (interactive)
+  (eglot-ensure))
 
 
 ;; expanding
