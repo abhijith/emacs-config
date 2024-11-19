@@ -1,5 +1,4 @@
-(require 'packages)
-(install-packages '(magit))
+(straight-use-package 'magit)
 
 (eval-after-load 'diff-mode
   '(progn

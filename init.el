@@ -469,3 +469,9 @@
   (eglot-ensure))
 
 (menu-bar-mode -1)
+
+(use-package disable-mouse
+  :diminish disable-mouse-global-mode
+  :delight disable-mouse-global-mode
+  :config
+  (global-disable-mouse-mode))
