@@ -1,12 +1,12 @@
 ;; (require 'packages)
 
 ;; go-autocomplete dependency
-;; go get -u github.com/mdempsky/gocode
+;; go install github.com/mdempsky/gocode@latest
 
-;; go get github.com/rogpeppe/godef
+;; go install github.com/rogpeppe/godef@latest
 
 ;; go imports
-;; go get golang.org/x/tools/cmd/goimports
+;; go install golang.org/x/tools/cmd/goimports@latest
 
 (use-package go-mode
   :straight t)

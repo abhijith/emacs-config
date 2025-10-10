@@ -463,6 +463,7 @@
 	(rust-mode . (eglot-rust-x-analyzer "rust-analyzer" "-v"
 					    "--log-file" "/tmp/ra.log"))))
 
+;; (add-hook 'python-mode-hook 'rainbow-delimiters-mode)
 
 (defun eglot-connect ()
   (interactive)
