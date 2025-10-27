@@ -49,6 +49,8 @@
  uniquify-buffer-name-style 'forward)
 
 (tooltip-mode -1)
+(setq tooltip-use-echo-area t)
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -90,14 +92,14 @@
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
 
-(use-package shell-pop
-  :straight t
-  :bind (("C-t" . shell-pop))
-  :config
-  (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
-  (setq shell-pop-term-shell "/bin/bash")
-  ;; need to do this manually or not picked up by `shell-pop'
-  (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
+;; (use-package shell-pop
+;;   :straight t
+;;   :bind (("C-t" . shell-pop))
+;;   :config
+;;   (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
+;;   (setq shell-pop-term-shell "/bin/bash")
+;;   ;; need to do this manually or not picked up by `shell-pop'
+;;   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
 (use-package rainbow-delimiters
   :straight t)
@@ -142,6 +144,17 @@
          ("M-/" . #'xref-go-back)
          ("M-r" . #'xref-find-references)))
 
+
+;;; Meta-package system: use-package. Auto-installs and configures packages.
+(defvar straight-use-package-by-default)
+(setq straight-use-package-by-default t) ; make use-package use straight
+
+(use-package straight
+  :custom
+  ;; add project and flymake to the pseudo-packages variable so straight.el doesn't download a separate version than what eglot downloads.
+  (straight-built-in-pseudo-packages '(emacs nadvice python image-mode project flymake))
+  (straight-use-package-by-default t))
+
 (use-package eglot
   :straight t
   :config
@@ -165,6 +178,14 @@
 (add-to-list 'eglot-server-programs
              '(rust-mode . (eglot-rust-x-analyzer "rust-analyzer" "-v"
 						  "--log-file" "/tmp/ra.log")))
+
+
+
+
+(add-hook 'eglot-managed-mode-hook (lambda () (eglot-inlay-hints-mode -1)))
+
+(add-to-list 'eglot-ignored-server-capabilities :documentHighlightProvider)
+(add-to-list 'eglot-ignored-server-capabilities :inlayHintProvider)
 
 (defun eglot-connect ()
   (interactive)
@@ -254,7 +275,7 @@
                           (all-completions he-search-string 'tags-complete-tag) 'string-lessp)))
   (while (and he-expand-list
               (he-string-member (car he-expand-list) he-tried-table))
-              (setq he-expand-list (cdr he-expand-list)))
+    (setq he-expand-list (cdr he-expand-list)))
   (if (null he-expand-list)
       (progn
         (when old (he-reset-string))
@@ -266,18 +287,19 @@
 
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 
-;; (defun smart-tab ()
-;;   (interactive)
-;;   (if (minibufferp)
-;;       (unless (minibuffer-complete)
-;;         (hippie-expand nil))
-;;     (if mark-active
-;;         (indent-region (region-beginning)
-;;                        (region-end))
-;;       (if (looking-at "\\_>")
-;;           (hippie-expand nil)
-;;         (indent-for-tab-command)))))
-;; (global-set-key (kbd "TAB") 'smart-tab)
+(defun smart-tab ()
+  (interactive)
+  (if (minibufferp)
+      (unless (minibuffer-complete)
+        (hippie-expand nil))
+    (if mark-active
+        (indent-region (region-beginning)
+                       (region-end))
+      (if (looking-at "\\_>")
+          (hippie-expand nil)
+        (indent-for-tab-command)))))
+
+(global-set-key (kbd "TAB") 'smart-tab)
 
 ;; (use-package wdired
 ;;   :straight t
