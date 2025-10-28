@@ -210,8 +210,10 @@
     (if (listp result) result
       (list result))))
 
+(require 'cl-lib)
+
 (defun current-hippie-expand-try-function-list ()
-  (remove-duplicates
+  (cl-remove-duplicates
    (remove nil
 	   (append
 	    (apply
