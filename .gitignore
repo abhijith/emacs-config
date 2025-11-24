@@ -1,5 +1,7 @@
 straight
 *.elc
+*.eln
+eln-cache/
 *.dat
 abbrev_defs
 places
@@ -11,3 +13,5 @@ recentf*
 session*
 el-get/*
 init-enabled/*
+transient/history.el
+.lsp-session*

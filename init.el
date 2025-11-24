@@ -25,6 +25,10 @@
 (straight-use-package 'queue)
 
 
+(setq straight-built-in-pseudo-packages
+      '(emacs nadvice python image-mode project))
+
+
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/init-enabled") t)
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/themes") t)
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -116,82 +120,6 @@
   (which-key-mode))
 
 
-;;;;;;;;;;; rust-mode
-
-(use-package rust-mode
-  :straight t
-  :mode ("\\.rs$" . rust-mode)
-  :config
-  (progn
-    (electric-indent-mode 0)
-    (setq rust-format-on-save t)
-    (add-hook 'rust-mode-hook
-	      (lambda ()
-		(setq indent-tabs-mode nil)
-		(setq prettify-symbols-alist
-		      '(("fn" . 955)
-			("->" . 8594))))))
-  :bind
-  (:map rust-mode-map
-	("C-c C-c" . rust-compile)
-	("C-c C-l" . rust-run-clippy)
-	("C-c C-d" . eldoc-print-current-symbol-info)))
-
-
-(use-package xref
-  :straight t
-  :bind (("M-." . #'xref-find-definitions)
-         ("M-/" . #'xref-go-back)
-         ("M-r" . #'xref-find-references)))
-
-
-;;; Meta-package system: use-package. Auto-installs and configures packages.
-(defvar straight-use-package-by-default)
-(setq straight-use-package-by-default t) ; make use-package use straight
-
-(use-package straight
-  :custom
-  ;; add project and flymake to the pseudo-packages variable so straight.el doesn't download a separate version than what eglot downloads.
-  (straight-built-in-pseudo-packages '(emacs nadvice python image-mode project flymake))
-  (straight-use-package-by-default t))
-
-(use-package eglot
-  :straight t
-  :config
-  (setq eglot-send-changes-idle-time (* 60 60))
-  (add-to-list 'eglot-stay-out-of 'flymake)
-  (add-hook 'eglot-managed-mode-hook (lambda ()
-				       (eldoc-mode 1)
-				       (flymake-mode 1))))
-
-(defclass eglot-rust-x-analyzer (eglot-lsp-server) ()
-  :documentation "A custom class for rust-analyzer.")
-
-(cl-defmethod eglot-initialization-options ((server eglot-rust-x-analyzer))
-  '(:rust-analyzer
-    ( :procMacro ( :attributes (:enable t)
-		   :enable t)
-      :cargo (:buildScripts (:enable t))
-      :diagnostics (:disabled ["unresolved-proc-macro"
-			       "unresolved-macro-call"]))))
-
-(add-to-list 'eglot-server-programs
-             '(rust-mode . (eglot-rust-x-analyzer "rust-analyzer" "-v"
-						  "--log-file" "/tmp/ra.log")))
-
-
-
-
-(add-hook 'eglot-managed-mode-hook (lambda () (eglot-inlay-hints-mode -1)))
-
-(add-to-list 'eglot-ignored-server-capabilities :documentHighlightProvider)
-(add-to-list 'eglot-ignored-server-capabilities :inlayHintProvider)
-
-(defun eglot-connect ()
-  (interactive)
-  (eglot-ensure))
-
-
 ;; expanding
 
 (defvar mode-specified-try-functions-table (make-hash-table))
@@ -211,97 +139,6 @@
       (list result))))
 
 (require 'cl-lib)
-
-(defun current-hippie-expand-try-function-list ()
-  (cl-remove-duplicates
-   (remove nil
-	   (append
-	    (apply
-	     'append
-	     (mapcar 'expand-try-functions-of minor-mode-list))
-	    (expand-try-functions-of major-mode)
-	    (expand-try-functions-of :default)))
-   :from-end t))
-
-(defadvice hippie-expand (around mode-specified-hippie-expand)
-  (let ((hippie-expand-try-functions-list
-	 (current-hippie-expand-try-function-list)))
-    ad-do-it))
-
-(defun enable-mode-specified-hippie-expand ()
-  (interactive)
-  (ad-enable-advice 'hippie-expand
-		    'around
-		    'mode-specified-hippie-expand)
-  (ad-activate 'hippie-expand))
-
-(defun disable-mode-specified-hippie-expand ()
-  (interactive)
-  (ad-disable-advice 'hippie-expand
-		     'around
-		     'mode-specified-hippie-expand)
-  (ad-deactivate 'hippie-expand))
-
-(set-default-try-functions
- '(try-expand-dabbrev
-   try-expand-all-abbrevs
-   try-expand-dabbrev-all-buffers
-   try-expand-list
-   try-expand-line
-   try-expand-dabbrev-from-kill))
-
-(set-mode-specified-try-functions
- 'emacs-lisp-mode
- '(try-complete-lisp-symbol-partially
-   try-complete-lisp-symbol))
-
-(defun tags-complete-tag (string predicate what)
-  (save-excursion
-    ;; If we need to ask for the tag table, allow that.
-    (if (eq what t)
-	(all-completions string (tags-completion-table) predicate)
-      (try-completion string (tags-completion-table) predicate))))
-
-
-(defun he-tag-beg ()
-  (let ((p
-         (save-excursion
-           (backward-word 1)
-           (point))))
-    p))
-
-(defun try-expand-tag (old)
-  (unless  old
-    (he-init-string (he-tag-beg) (point))
-    (setq he-expand-list (sort
-                          (all-completions he-search-string 'tags-complete-tag) 'string-lessp)))
-  (while (and he-expand-list
-              (he-string-member (car he-expand-list) he-tried-table))
-    (setq he-expand-list (cdr he-expand-list)))
-  (if (null he-expand-list)
-      (progn
-        (when old (he-reset-string))
-        ())
-    (he-substitute-string (car he-expand-list))
-    (setq he-expand-list (cdr he-expand-list))
-    t))
-
-
-(global-set-key [remap dabbrev-expand] 'hippie-expand)
-
-(defun smart-tab ()
-  (interactive)
-  (if (minibufferp)
-      (unless (minibuffer-complete)
-        (hippie-expand nil))
-    (if mark-active
-        (indent-region (region-beginning)
-                       (region-end))
-      (if (looking-at "\\_>")
-          (hippie-expand nil)
-        (indent-for-tab-command)))))
-
-(global-set-key (kbd "TAB") 'smart-tab)
 
 ;; (use-package wdired
 ;;   :straight t
@@ -381,45 +218,7 @@
   (dolist (m '("AC" "Undo-Tree" "ARev" "Anzu" "Guide" "company"))
     (add-to-list 'sml/hidden-modes (concat " " m))))
 
-;; (use-package magit
-;;   :straight t
-;;   :init
-;;   (progn
-;;     (add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . diff-mode)))
-;;   :config
-;;   (setq magit-auto-revert-mode 1
-;; 	magit-last-seen-setup-instructions "1.4.0"
-;; 	diff-switches "-u"
-;; 	magit-push-always-verify nil
-;; 	magit-git-executable "git"
-;; 	magit-save-repository-buffers 'dontask
-;; 	magit-default-tracking-name-function
-;; 	#'magit-default-tracking-name-branch-only)
-;;   (add-hook 'magit-mode-hook #'highline-mode-on)
-;;   (setq magit-repolist-columns
-;; 	'(("Name"       25  magit-repolist-column-ident nil)
-;;           ("Branch"     10  magit-repolist-column-branch)
-;;           ("Version"    25  magit-repolist-column-version nil)
-;;           ("↓P"         5   magit-repolist-column-unpulled-from-pushremote)
-;;           ("↑P"         5   magit-repolist-column-unpushed-to-pushremote)
-;;           (""           6   magit-repolist-column-dirty)
-;;           ("Path"       99  magit-repolist-column-path nil)))
-;;   :bind
-;;   (("C-c m" . magit-status)
-;;    ("C-c l" . magit-log-buffer-file)
-;;    ("C-c L" . magit-log-head)
-;;    ("C-c o" . magit-checkout)
-;;    ("C-c d" . magit-diff-buffer-file)
-;;    ("C-c D" . magit-diff)))
 
-(use-package magit-filenotify
-  :straight t
-  :config
-  (add-hook 'magit-status-mode-hook 'magit-filenotify-mode))
-
-
-
-;; my customizations
 (use-package beacon
   :straight t
   :config (beacon-mode t))
@@ -456,47 +255,3 @@
   (format "initalized"))
 
 (put 'downcase-region 'disabled nil)
-
-
-(use-package eglot
-  :straight t
-  :config
-  (setq eglot-send-changes-idle-time (* 60 60))
-  (add-to-list 'eglot-stay-out-of 'flymake)
-  (add-hook 'eglot-managed-mode-hook (lambda ()
-				       (eldoc-mode 1)
-				       (flymake-mode 1))))
-
-(defclass eglot-rust-x-analyzer (eglot-lsp-server) ()
-  :documentation "A custom class for rust-analyzer.")
-
-(cl-defmethod eglot-initialization-options ((server eglot-rust-x-analyzer))
-  '(:rust-analyzer
-    ( :procMacro ( :attributes (:enable t)
-		   :enable t)
-      :cargo (:buildScripts (:enable t))
-      :diagnostics (:disabled ["unresolved-proc-macro"
-			       "unresolved-macro-call"]))))
-
-(setq eglot-server-programs
-      '((python-mode . ("pyls"))
-	(clojure-mode . ("clojure-lsp"))
-	(elixir-mode . ("language_server.sh"))
-	(caml-mode . ("ocamllsp"))
-	(erlang-mode . ("erlang_ls" "--transport" "stdio"))
-	(rust-mode . (eglot-rust-x-analyzer "rust-analyzer" "-v"
-					    "--log-file" "/tmp/ra.log"))))
-
-;; (add-hook 'python-mode-hook 'rainbow-delimiters-mode)
-
-(defun eglot-connect ()
-  (interactive)
-  (eglot-ensure))
-
-(menu-bar-mode -1)
-
-(use-package disable-mouse
-  :diminish disable-mouse-global-mode
-  :delight disable-mouse-global-mode
-  :config
-  (global-disable-mouse-mode))

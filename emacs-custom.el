@@ -28,4 +28,5 @@
  '(font-lock-variable-name-face ((t (:foreground "steel blue"))))
  '(rust-string-interpolation ((t (:inherit font-lock-string-face))))
  '(tuareg-font-lock-governing-face ((t (:foreground "dark red" :weight normal))) t)
- '(tuareg-font-lock-operator-face ((t (:foreground "gainsboro"))) t))
+ '(tuareg-font-lock-operator-face ((t (:foreground "gainsboro"))) t)
+ '(which-func ((t (:foreground "magenta")))))

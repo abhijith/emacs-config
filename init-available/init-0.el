@@ -1,7 +1,7 @@
 (use-package exec-path-from-shell :straight t)
 (use-package company :straight t)
 (use-package powerline :straight t)
-(use-package powerline :straight t)
+(use-package which-key :straight t)
 
 (use-package git-timemachine :straight t)
 
