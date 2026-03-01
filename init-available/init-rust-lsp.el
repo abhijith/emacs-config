@@ -3,40 +3,18 @@
   :init
 
   (defun my-try-expand-lsp-smart (old)
-  "Hippie-expand:
-If 1 match: Expand in-place.
-If >1 match: Switch to minibuffer/UI.
-If 0 matches: Fail."
+  "Succinct LSP expansion: 1 match = expand; >1 = minibuffer; 0 = fail."
   (unless old
-    (he-init-string (he-dabbrev-beg) (point))
-    (let ((capf-data (run-hook-with-args-until-success 'completion-at-point-functions)))
-      (setq he-expand-list nil)
-      (when (and (listp capf-data) (nth 2 capf-data))
-        (let* ((table (nth 2 capf-data))
-               (prefix (buffer-substring-no-properties (nth 0 capf-data) (nth 1 capf-data)))
-               (candidates (all-completions prefix table)))
-
+    (let ((capf (run-hook-with-args-until-success 'completion-at-point-functions)))
+      (when (and (listp capf) (nth 2 capf))
+        (let* ((beg (nth 0 capf)) (end (nth 1 capf)) (table (nth 2 capf))
+               (prefix (buffer-substring-no-properties beg end))
+               (result (try-completion prefix table)))
           (cond
-           ;; Case A: Exact Single Match - Expand it.
-           ((= (length candidates) 1)
-            (setq he-expand-list candidates))
-
-           ;; Case B: Ambiguity - Hand over to Minibuffer.
-           ((> (length candidates) 1)
-            (he-reset-string) ; Clean up hippie's internal state
-            (completion-at-point) ; Trigger the standard UI
-            (setq he-expand-list nil)) ; Stop hippie from cycling
-
-           ;; Case C: No matches.
-           (t (setq he-expand-list nil)))))))
-
-  ;; Standard Hippie-expand boilerplate for the single-match case
-  (if (null he-expand-list)
-      nil
-    (he-substitute-string (car he-expand-list))
-    (setq he-expand-list nil) ; Clear it so it doesn't 'cycle' back to itself
-    t))
-
+           ((stringp result) (completion-at-point)) ; Multiple matches -> UI
+           ((eq result t) (completion-at-point))    ; Unique match -> Expand
+           (t nil))))))                             ; No match -> Fail
+  nil) ; Always return nil to prevent hippie-expand from trying to "cycle"
 
 
   :hook ((rust-mode . lsp-deferred)
