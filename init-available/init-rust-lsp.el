@@ -81,7 +81,7 @@
   (setq lsp-lens-enable nil)
   (setq lsp-headerline-breadcrumb-enable nil)
 
-  (setq lsp-diagnostics-provider :none)
+  (setq lsp-diagnostics-provider :flymake)
 
   (setq lsp-eldoc-enable-hover nil)
 
