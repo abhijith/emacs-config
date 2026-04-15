@@ -18,8 +18,7 @@
 
 
   :hook ((rust-mode . lsp-deferred)
-         (rust-mode . rainbow-delimiters-mode)
-         (rust-mode . superword-mode))
+         (rust-mode . rainbow-delimiters-mode))
 
   :config
   (setq rust-rustfmt-bin "rustup"
@@ -34,7 +33,7 @@
   ;; no longer be necessary.
               ("M-n"   . flymake-goto-next-error)
               ("M-p"   . flymake-goto-prev-error)
-              ("C-c C-d"   . lsp-describe-thing-at-point)
+              ("C-c C-d" . lsp-describe-thing-at-point)
 
 	      ;; ("M-TAB" . completion-at-point)
               ("M-TAB" . hippie-expand)
@@ -101,8 +100,7 @@
   ;; comment to disable rustfmt on save
   (setq rust-format-on-save t)
   (setq lsp-rust-analyzer-proc-macro-enable nil)
-  (add-hook 'rust-mode-hook 'rainbow-delimiters-mode)
-  (add-hook 'rust-mode-hook #'(lambda () (flymake-mode nil))))
+  (add-hook 'rust-mode-hook 'rainbow-delimiters-mode))
 
 
 (use-package lsp-mode
@@ -110,13 +108,12 @@
   :commands lsp
   :custom
   ;; what to use when checking on-save. "check" is default
-  ;; (lsp-rust-analyzer-cargo-watch-command "clippy")
+  (lsp-rust-analyzer-cargo-watch-command "check")
   (lsp-eldoc-render-all nil)
   (lsp-idle-delay -1)
   (lsp-rust-analyzer-server-display-inlay-hints nil)
   :config
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-  (add-hook 'lsp-mode-hook #'(lambda () (flymake-mode nil))))
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
 (use-package lsp-ui
   :straight t
