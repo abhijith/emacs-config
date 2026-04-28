@@ -1,4 +1,8 @@
 (use-package yaml-mode :straight t)
+(use-package yaml-pro :straight t)
+(use-package outline-indent :straight t)
+(use-package indent-tools :straight t)
+
 (use-package json-mode :straight t)
 (use-package boxquote :straight t)
 (use-package csv-mode :straight t)
