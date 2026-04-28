@@ -62,6 +62,7 @@
   (setq lsp-prefer-capf t)
   (setq lsp-enable-symbol-highlighting nil)
   (setq lsp-signature-auto-activate nil)
+  (setq lsp-rust-analyzer-cargo-run-build-scripts t)
 
   ;; uncomment for plain lsp
 
